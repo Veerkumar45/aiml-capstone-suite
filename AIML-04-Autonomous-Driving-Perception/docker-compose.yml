@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  perception-simulator:
+    build: .
+    ports:
+      - "8502:8502"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app

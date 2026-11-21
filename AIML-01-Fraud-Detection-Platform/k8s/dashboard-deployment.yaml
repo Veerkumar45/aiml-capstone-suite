@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analyst-dashboard
+  namespace: fraud-detection-prod
+  labels:
+    app: analyst-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analyst-dashboard
+  template:
+    metadata:
+      labels:
+        app: analyst-dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: fraud-platform/analyst-dashboard:latest
+          ports:
+            - containerPort: 8501
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: analyst-dashboard-service
+  namespace: fraud-detection-prod
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8501
+      targetPort: 8501
+      name: http
+  selector:
+    app: analyst-dashboard

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fraud-detection-prod
+  labels:
+    app.kubernetes.io/name: fraud-platform
+    environment: production
